@@ -3,5 +3,5 @@
 pipelineEmpresaFrontend { 
     appName    = 'proyecto-leo-frontend'
     version    = '1.0.0'
-    branch     = env.BRANCH_NAME ?: 'main
+    branch     = env.BRANCH_NAME ?: 'main'
 }
