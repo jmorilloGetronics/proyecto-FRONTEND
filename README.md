@@ -14,6 +14,7 @@ Frontend web del proyecto Concesionario Leo. Este repositorio contiene una aplic
 ## Arranque en local
 1. Arrancar primero el backend.
 2. Abrir index.html en el navegador.
+3. Desde inicio, entrar al catalogo en catalogo.html.
 
 La app consulta:
 - http://localhost:8080/api/coches
@@ -21,15 +22,24 @@ La app consulta:
 ## Estructura principal
 ```text
 index.html
-app.js
-style.css
+catalogo.html
+assets/
+	css/
+		inicio.css
+		catalogo.css
+	js/
+		catalogo.js
 Jenkinsfile
 ```
 
 ## Integracion con backend
 El frontend muestra el catalogo de coches llamando al endpoint GET /api/coches.
 
-Si cambias host o puerto del backend, actualiza la URL en app.js.
+Si cambias host o puerto del backend, actualiza la URL en assets/js/catalogo.js.
+
+## Roles y acceso
+- usuario / password: consulta del catalogo.
+- admin / pass123: acceso a panel CRUD (crear, editar y eliminar vehiculos).
 
 ## CI/CD (GitLab + Jenkins)
 Este repositorio tiene pipeline separado del backend (2 repos, 2 pipelines).

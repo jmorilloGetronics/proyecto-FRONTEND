@@ -1,0 +1,236 @@
+:root {
+    --bg-soft: #e6f3eb;
+    --bg-cream: #f8fdf9;
+    --ink: #173022;
+    --ink-muted: #406151;
+    --accent: #2f8f5b;
+    --accent-dark: #206642;
+    --card: rgba(255, 255, 255, 0.74);
+    --line: rgba(23, 48, 34, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Sora", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 86% 8%, #b9e8c7 0, transparent 35%),
+        radial-gradient(circle at 12% 24%, #d6f2e0 0, transparent 30%),
+        linear-gradient(160deg, var(--bg-soft), var(--bg-cream));
+    min-height: 100vh;
+}
+
+.hero-header {
+    width: min(96vw, 1320px);
+    margin: 0 auto;
+    padding: 30px 24px 20px;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    font-family: "Rajdhani", "Sora", sans-serif;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.top-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.top-nav a:hover,
+.top-nav a.active {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-copy {
+    margin-top: 60px;
+    max-width: 740px;
+    animation: rise 0.7s ease both;
+}
+
+.eyebrow {
+    margin: 0;
+    color: var(--accent-dark);
+    letter-spacing: 0.16em;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.hero-copy h1 {
+    margin: 10px 0 16px;
+    font-family: "Rajdhani", "Sora", sans-serif;
+    font-size: clamp(2.15rem, 6vw, 4.5rem);
+    line-height: 0.95;
+}
+
+.lead {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--ink-muted);
+    font-size: 1.04rem;
+    line-height: 1.6;
+}
+
+.cta-row {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 11px 18px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn.primary:hover {
+    background: var(--accent-dark);
+}
+
+.btn.ghost {
+    border-color: var(--line);
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.asfalto {
+    margin-top: 56px;
+    border-radius: 12px;
+    background: #274237;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.asfalto span {
+    width: 92px;
+    height: 6px;
+    border-radius: 999px;
+    background: #d7f0dc;
+    animation: lane 2.8s linear infinite;
+}
+
+.asfalto span:nth-child(2) {
+    animation-delay: 0.35s;
+}
+
+.asfalto span:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+main {
+    width: min(96vw, 1320px);
+    margin: 0 auto;
+    padding: 22px 24px 40px;
+}
+
+.values-section {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.value-card {
+    background: var(--card);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    animation: rise 0.65s ease both;
+}
+
+.value-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.value-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.value-card h2 {
+    margin: 0 0 10px;
+    font-size: 1.12rem;
+    font-family: "Rajdhani", "Sora", sans-serif;
+}
+
+.value-card p {
+    margin: 0;
+    color: var(--ink-muted);
+    line-height: 1.55;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes lane {
+    0% {
+        transform: translateX(-115%);
+    }
+
+    100% {
+        transform: translateX(950%);
+    }
+}
+
+@media (max-width: 900px) {
+    .values-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .top-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-copy {
+        margin-top: 38px;
+    }
+}

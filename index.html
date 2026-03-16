@@ -2,16 +2,55 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Concesionario Leo Pro</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concesionario Leo | Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/inicio.css">
 </head>
 <body>
-    <header>
-        <h1>🏎️ Concesionario Leo - App Prueba API REST + FRONT BASICO 🏎️</h1>
-        <p>Los mejores coches, al mejor precio</p>
-    </header>
-    <div id="lista-coches" class="contenedor">
+    <header class="hero-header">
+        <div class="top-row">
+            <div class="logo">CONCESIONARIO LEO</div>
+            <nav class="top-nav" aria-label="Navegacion principal">
+                <a href="index.html" class="active">Inicio</a>
+                <a href="catalogo.html">Catalogo</a>
+            </nav>
         </div>
-    <script src="app.js"></script>
+
+        <section class="hero-copy">
+            <p class="eyebrow">NUEVA EXPERIENCIA</p>
+            <h1>Conduce algo que te represente.</h1>
+            <p class="lead">Una pagina de inicio limpia, pensada para descubrir tu proximo coche sin ruido y con estilo.</p>
+            <div class="cta-row">
+                <a class="btn primary" href="catalogo.html">Entrar al catalogo</a>
+                <a class="btn ghost" href="#valores">Ver mas</a>
+            </div>
+        </section>
+
+        <div class="asfalto" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        <section id="valores" class="values-section">
+            <article class="value-card">
+                <h2>Seleccion precisa</h2>
+                <p>Coches pensados para ciudad, carretera o uso mixto. Elegir bien empieza con claridad.</p>
+            </article>
+            <article class="value-card">
+                <h2>Compra sin friccion</h2>
+                <p>Proceso simple: compara, decide y avanza sin pasos innecesarios ni pantallas recargadas.</p>
+            </article>
+            <article class="value-card">
+                <h2>Asesoria real</h2>
+                <p>Te guiamos segun lo que necesitas hoy, no segun lo que toca vender manana.</p>
+            </article>
+        </section>
+    </main>
 </body>
 </html>
