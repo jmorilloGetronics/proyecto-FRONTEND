@@ -48,8 +48,8 @@ async function flushPromises() {
 }
 
 async function loadCatalogScript() {
-  const unique = `${Date.now()}-${Math.random()}`;
-  await import(`../assets/js/catalogo.js?${unique}`);
+  vi.resetModules();
+  await import('../assets/js/catalogo.js');
 }
 
 describe('catalogo frontend', () => {
