@@ -1,6 +1,6 @@
 const API_BASE = 'http://localhost:8082/api';
 
-const contenedor = document.getElementById('lista-coches');
+const contenedor = document.getElementById('lista-motos');
 const loginForm = document.getElementById('login-form');
 const loginPanel = document.getElementById('login-panel');
 const headerLogoutBtn = document.getElementById('header-logout-btn');
@@ -20,7 +20,7 @@ const cancelarEdicionBtn = document.getElementById('cancelar-edicion-btn');
 
 let authToken = null;
 let authRole = null;
-let cochesCache = [];
+let motosCache = [];
 let loginToastTimeout = null;
 
 function esAdmin() {
@@ -58,14 +58,14 @@ function mostrarLoginToast(mensaje) {
 function limpiarFormularioAdmin() {
     vehiculoForm.reset();
     vehiculoIdInput.value = '';
-    guardarVehiculoBtn.textContent = 'Guardar vehiculo';
+    guardarVehiculoBtn.textContent = 'Guardar moto';
     cancelarEdicionBtn.classList.add('hidden');
 }
 
 function limpiarEstadoSesion() {
     authToken = null;
     authRole = null;
-    cochesCache = [];
+    motosCache = [];
 
     roleChip.classList.add('hidden');
     roleChip.textContent = '';
@@ -103,99 +103,99 @@ function cabecerasAutorizadas(conJson = false) {
     return headers;
 }
 
-function pintarCoches(coches) {
-    cochesCache = coches;
+function pintarMotos(motos) {
+    motosCache = motos;
 
-    if (coches.length === 0) {
-        contenedor.innerHTML = '<div class="card"><h2>Sin vehiculos</h2><p>No hay vehiculos cargados en este momento.</p></div>';
+    if (motos.length === 0) {
+        contenedor.innerHTML = '<div class="card"><h2>Sin vehiculos</h2><p>No hay motos cargadas en este momento.</p></div>';
         return;
     }
 
-    contenedor.innerHTML = coches.map((c) => `
+    contenedor.innerHTML = motos.map((m) => `
         <div class="card">
-            <h2>${c.marca}</h2>
-            <p>${c.modelo}</p>
-            <div class="precio">${c.precio.toLocaleString()} €</div>
-            <p><span class="badge ${c.enStock ? 'stock' : 'no-stock'}">
-                ${c.enStock ? 'Disponible' : 'Reservado'}
+            <h2>${m.marca}</h2>
+            <p>${m.modelo}</p>
+            <div class="precio">${m.precio.toLocaleString()} €</div>
+            <p><span class="badge ${m.enStock ? 'stock' : 'no-stock'}">
+                ${m.enStock ? 'Disponible' : 'Reservado'}
             </span></p>
             ${esAdmin() ? `
             <div class="card-actions">
-                <button type="button" class="action-btn edit-btn" data-action="edit" data-id="${c.id}">Editar</button>
-                <button type="button" class="action-btn delete-btn" data-action="delete" data-id="${c.id}">Eliminar</button>
+                <button type="button" class="action-btn edit-btn" data-action="edit" data-id="${m.id}">Editar</button>
+                <button type="button" class="action-btn delete-btn" data-action="delete" data-id="${m.id}">Eliminar</button>
             </div>
             ` : ''}
         </div>
     `).join('');
 }
 
-async function cargarCoches() {
+async function cargarMotos() {
     if (!authToken) {
         return;
     }
 
-    const response = await fetch(`${API_BASE}/coches`, {
+    const response = await fetch(`${API_BASE}/motos`, {
         headers: cabecerasAutorizadas()
     });
 
     if (!response.ok) {
-        throw new Error(await extraerMensajeError(response, 'No se pudo cargar el listado de coches.'));
+        throw new Error(await extraerMensajeError(response, 'No se pudo cargar el listado de motos.'));
     }
 
-    const coches = await response.json();
-    pintarCoches(coches);
+    const motos = await response.json();
+    pintarMotos(motos);
     contenedor.classList.remove('hidden');
 }
 
 function iniciarEdicion(id) {
-    const coche = cochesCache.find((item) => item.id === id);
-    if (!coche) {
-        actualizarAdminEstado('No se encontro el vehiculo para editar.', true);
+    const moto = motosCache.find((item) => item.id === id);
+    if (!moto) {
+        actualizarAdminEstado('No se encontro la moto para editar.', true);
         return;
     }
 
-    vehiculoIdInput.value = coche.id;
-    vehiculoMarcaInput.value = coche.marca;
-    vehiculoModeloInput.value = coche.modelo;
-    vehiculoPrecioInput.value = coche.precio;
-    vehiculoStockInput.checked = coche.enStock;
-    guardarVehiculoBtn.textContent = 'Actualizar vehiculo';
+    vehiculoIdInput.value = moto.id;
+    vehiculoMarcaInput.value = moto.marca;
+    vehiculoModeloInput.value = moto.modelo;
+    vehiculoPrecioInput.value = moto.precio;
+    vehiculoStockInput.checked = moto.enStock;
+    guardarVehiculoBtn.textContent = 'Actualizar moto';
     cancelarEdicionBtn.classList.remove('hidden');
-    actualizarAdminEstado(`Editando vehiculo ${coche.id}.`);
+    actualizarAdminEstado(`Editando moto ${moto.id}.`);
 }
 
 async function crearVehiculo(payload) {
-    const response = await fetch(`${API_BASE}/coches`, {
+    const response = await fetch(`${API_BASE}/motos`, {
         method: 'POST',
         headers: cabecerasAutorizadas(true),
         body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-        throw new Error(await extraerMensajeError(response, 'No se pudo crear el vehiculo.'));
+        throw new Error(await extraerMensajeError(response, 'No se pudo crear la moto.'));
     }
 }
 
 async function actualizarVehiculo(id, payload) {
-    const response = await fetch(`${API_BASE}/coches/${id}`, {
+    const response = await fetch(`${API_BASE}/motos/${id}`, {
         method: 'PUT',
         headers: cabecerasAutorizadas(true),
         body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-        throw new Error(await extraerMensajeError(response, 'No se pudo actualizar el vehiculo.'));
+        throw new Error(await extraerMensajeError(response, 'No se pudo actualizar la moto.'));
     }
 }
 
 async function eliminarVehiculo(id) {
-    const response = await fetch(`${API_BASE}/coches/${id}`, {
+    const response = await fetch(`${API_BASE}/motos/${id}`, {
         method: 'DELETE',
         headers: cabecerasAutorizadas()
     });
 
     if (!response.ok) {
-        throw new Error(await extraerMensajeError(response, 'No se pudo eliminar el vehiculo.'));
+        throw new Error(await extraerMensajeError(response, 'No se pudo eliminar la moto.'));
     }
 }
 
@@ -228,18 +228,18 @@ async function manejarSubmitVehiculo(event) {
 
         if (vehiculoId === '') {
             await crearVehiculo(payload);
-            actualizarAdminEstado('Vehiculo creado correctamente.');
-            mostrarLoginToast('Vehiculo creado');
+            actualizarAdminEstado('Moto creada correctamente.');
+            mostrarLoginToast('Moto creada');
         } else {
             await actualizarVehiculo(vehiculoId, payload);
-            actualizarAdminEstado('Vehiculo actualizado correctamente.');
-            mostrarLoginToast('Vehiculo actualizado');
+            actualizarAdminEstado('Moto actualizada correctamente.');
+            mostrarLoginToast('Moto actualizada');
         }
 
         limpiarFormularioAdmin();
-        await cargarCoches();
+        await cargarMotos();
     } catch (error) {
-        actualizarAdminEstado(error.message || 'No se pudo guardar el vehiculo.', true);
+        actualizarAdminEstado(error.message || 'No se pudo guardar la moto.', true);
     }
 }
 
@@ -265,7 +265,7 @@ async function manejarAccionesListado(event) {
     }
 
     if (action === 'delete') {
-        const confirmar = window.confirm('Quieres eliminar este vehiculo?');
+        const confirmar = window.confirm('Quieres eliminar esta moto?');
         if (!confirmar) {
             return;
         }
@@ -277,11 +277,11 @@ async function manejarAccionesListado(event) {
                 limpiarFormularioAdmin();
             }
 
-            actualizarAdminEstado('Vehiculo eliminado correctamente.');
-            mostrarLoginToast('Vehiculo eliminado');
-            await cargarCoches();
+            actualizarAdminEstado('Moto eliminada correctamente.');
+            mostrarLoginToast('Moto eliminada');
+            await cargarMotos();
         } catch (error) {
-            actualizarAdminEstado(error.message || 'No se pudo eliminar el vehiculo.', true);
+            actualizarAdminEstado(error.message || 'No se pudo eliminar la moto.', true);
         }
     }
 }
@@ -319,7 +319,7 @@ async function login(event) {
         adminPanel.classList.toggle('hidden', !esAdmin());
         limpiarFormularioAdmin();
         if (esAdmin()) {
-            actualizarAdminEstado('Modo administrador activo: puedes crear, editar y eliminar vehiculos.');
+            actualizarAdminEstado('Modo administrador activo: puedes crear, editar y eliminar motos.');
         } else {
             actualizarAdminEstado('');
         }
@@ -327,7 +327,7 @@ async function login(event) {
         actualizarEstado(`Sesion iniciada como ${data.username}.`);
         mostrarLoginToast(`Login correcto (${data.role})`);
 
-        await cargarCoches();
+        await cargarMotos();
     } catch (error) {
         limpiarEstadoSesion();
         actualizarEstado(error.message || 'No se pudo iniciar sesion.', true);
