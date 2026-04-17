@@ -10,5 +10,5 @@ pipelineLeo(
     sonarSources: '.',
     sonarExclusions: 'node_modules/**,coverage/**,tests/**',
     sonarLcovReportPaths: 'coverage/lcov.info',
-    archiveArtifactsPattern: 'index.html,catalogo.html,motos.html,assets/**,README.md'
+    archiveArtifactsPattern: 'index.html,catalogo.html,motos.html,assets/**,Dockerfile,k8s/**,README.md'
 )

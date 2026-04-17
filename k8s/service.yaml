@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proyecto-leo-frontend
+  labels:
+    app: proyecto-leo-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: proyecto-leo-frontend
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http

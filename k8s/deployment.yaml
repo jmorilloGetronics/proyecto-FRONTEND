@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proyecto-leo-frontend
+  labels:
+    app: proyecto-leo-frontend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proyecto-leo-frontend
+  template:
+    metadata:
+      labels:
+        app: proyecto-leo-frontend
+        version: v1
+    spec:
+      containers:
+      - name: proyecto-leo-frontend
+        image: gtn/proyecto-leo-frontend:1.0.0  # NUNCA usar :latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 3
+      imagePullSecrets:
+      - name: harbor-registry-secret
